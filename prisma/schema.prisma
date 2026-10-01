@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Show {
+  id          String   @id @default(uuid())
+  name        String
+  total_seats Int
+  price_paise Int
+  seats       Seat[]
+}
+
+model Seat {
+  id          String  @default(uuid())
+  showId      String
+  seat_number String
+  status      String  @default("available") // available, held, confirmed
+  userId      String?
+  show        Show    @relation(fields: [showId], references: [id])
+
+  @@id([showId, seat_number])
+}
+
+model Reservation {
+  id               String   @id @default(uuid())
+  idempotency_key  String   @unique
+  userId           String
+  seat_numbers     String[] 
+  status           String   @default("confirmed")
+  createdAt        DateTime @default(now())
+}
