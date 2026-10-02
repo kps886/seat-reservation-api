@@ -1,5 +1,5 @@
-const TARGET_URL = process.argv[2] || 'http://localhost:3000';
-const showId = '9e2afb72-ee7a-4b09-bbad-8000244d6b72'; // Your active show ID
+const TARGET_URL = process.argv[2] || 'https://seat-reservation-api-production.up.railway.app';
+const showId = '0ef5dd8e-88c5-4425-bc45-cd9b40ebb335'; // Your active show ID
 
 async function runBurst() {
   console.log(`🚀 Starting Load & Concurrency Burst against ${TARGET_URL} for Show ${showId}...`);
@@ -61,7 +61,7 @@ async function runBurst() {
         'Authorization': 'Bearer user_vip',
         'idempotency-key': retryKey,
       },
-      body: JSON.stringify({ seats: ['A13'] }),
+      body: JSON.stringify({ seats: ['A1'] }),
     });
     retryStatuses.push(res.status);
   }
